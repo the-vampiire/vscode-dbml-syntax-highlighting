@@ -1,8 +1,8 @@
 #!/bin/bash
 
 URL="https://raw.githubusercontent.com/holistics/dbml/master/dbml-playground/src/components/monaco/dbml-language.ts"
-STORED_FILE="source/dbml-language.ts"
-DIFF_FILE="source/diff-output.txt"
+STORED_FILE="upstream-source/dbml-language.ts"
+DIFF_FILE="upstream-source/diff-output.txt"
 
 # Fetch latest source and overwrite stored file
 curl -s "$URL" -o "$STORED_FILE"
