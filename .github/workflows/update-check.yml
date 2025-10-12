@@ -2,8 +2,8 @@ name: Check for Upstream Updates
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Daily at midnight UTC
-  workflow_dispatch:  # Allow manual trigger
+    - cron: "0 0 * * *" # Daily at midnight UTC
+  workflow_dispatch: # Allow manual trigger
 
 permissions:
   contents: write
@@ -16,21 +16,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for git diff
+          fetch-depth: 0 # Full history for git diff
 
       - name: Run update check
         run: |
           chmod +x scripts/check-for-update.sh
           scripts/check-for-update.sh
 
+      - name: Set branch name
+        run: |
+          BRANCH_NAME="source-diff-$(date +%Y%m%d%H%M%S)"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
       - name: Create Pull Request
-        if: env.DIFF_FOUND == '1'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: "source-diff-$(date +%Y%m%d%H%M%S)"
-          commit-message: "drift detected from upstream source"
+          branch: ${{ env.BRANCH_NAME }}
           title: "drift from source detected"
           body: "The upstream source has been updated, review the diff and update the extension."
           base: master
-          assignees: "the-vampiire"
