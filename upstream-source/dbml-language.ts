@@ -19,7 +19,7 @@ import * as monaco from 'monaco-editor'
  */
 const DBML_LANGUAGE_CONFIG: monaco.languages.LanguageConfiguration = {
   comments: {
-    lineComment: '/',
+    lineComment: '//',
     blockComment: ['/*', '*/']
   },
   brackets: [
@@ -54,7 +54,7 @@ const DBML_LANGUAGE_CONFIG: monaco.languages.LanguageConfiguration = {
  */
 const DBML_TOKEN_PROVIDER: monaco.languages.IMonarchLanguage = {
   keywords: [
-    'Table', 'Ref', 'Project', 'TableGroup', 'Note',
+    'Table', 'Enum', 'Ref', 'Project', 'TableGroup', 'Note',
     'indexes', 'Indexes', 'enum', 'table', 'ref', 'project', 'tablegroup', 'note'
   ],
   typeKeywords: [
