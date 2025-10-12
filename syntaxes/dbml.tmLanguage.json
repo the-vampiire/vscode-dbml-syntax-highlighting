@@ -1,0 +1,155 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tm-grammars/master/grammars/tm/grammar-schema.json",
+  "name": "DBML",
+  "scopeName": "source.dbml",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#numbers"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#types"
+    },
+    {
+      "include": "#operators"
+    },
+    {
+      "include": "#punctuation"
+    },
+    {
+      "include": "#identifiers"
+    },
+    {
+      "include": "#annotations"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.dbml",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.dbml",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.dbml",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dbml",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.dbml",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dbml",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.other.dbml",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "constant.character.escape.dbml",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        {
+          "name": "constant.numeric.dbml",
+          "match": "\\b\\d+\\.\\d+([eE][\\-+]?\\d+)?\\b"
+        },
+        {
+          "name": "constant.numeric.dbml",
+          "match": "\\b0[xX][0-9a-fA-F]+\\b"
+        },
+        {
+          "name": "constant.numeric.dbml",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.other.dbml",
+          "match": "\\b(?i)(Table|Enum|Ref|Project|TableGroup|Note|indexes|Indexes|enum|table|ref|project|tablegroup|note)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.dbml",
+          "match": "\\b(?i)(int|integer|bigint|smallint|tinyint|varchar|char|text|nvarchar|nchar|ntext|decimal|numeric|float|double|real|money|datetime|timestamp|date|time|boolean|bool|bit|json|jsonb|xml|uuid|uniqueidentifier|blob|binary|varbinary)\\b"
+        }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        {
+          "name": "keyword.operator.dbml",
+          "match": "[=><!~?:&|+\\-*/\\^%]+"
+        }
+      ]
+    },
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.separator.dbml",
+          "match": "[;,\\.]"
+        },
+        {
+          "name": "punctuation.definition.bracket.dbml",
+          "match": "[{}()\\[\\]]"
+        }
+      ]
+    },
+    "identifiers": {
+      "patterns": [
+        {
+          "name": "variable.parameter.dbml",
+          "match": "\\b[a-zA-Z_$][\\w$]*\\b"
+        }
+      ]
+    },
+    "annotations": {
+      "patterns": [
+        {
+          "name": "comment.block.dbml",
+          "begin": "\\[",
+          "end": "\\]"
+        }
+      ]
+    }
+  }
+}

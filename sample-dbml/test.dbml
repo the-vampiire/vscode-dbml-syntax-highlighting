@@ -1,0 +1,54 @@
+// Sample DBML file for testing all grammar elements
+
+// Line comment
+/* Block comment */
+
+Project my_project {
+  database_type: 'postgresql'
+  note: 'Single quoted string'
+  description: "Double quoted string"
+  template: `Backtick string with ${interpolation}`
+}
+
+Table users {
+  id int [primary key] // Integer and operators
+  age tinyint
+  balance decimal(10,2) // Float-like
+  hex_value int [default: 0x1A] // Hex number
+  name varchar(100)
+  email varchar(255) [unique, not null]
+  created_at timestamp
+  updated_at datetime
+  is_active boolean
+  metadata jsonb
+  avatar blob
+  indexes {
+    (email)
+    [name: 'idx_users_email']
+  }
+}
+
+TableGroup users_and_orders {
+  users
+  orders
+}
+
+Enum status {
+  active
+  inactive
+  pending
+}
+
+Enum priority {
+  low
+  medium
+  high
+}
+
+Ref: users.id > orders.user_id
+Ref: orders.status - status.active
+
+Note {
+  'This is a note for the schema'
+  "With double quotes"
+}
