@@ -1,6 +1,10 @@
 # DBML Syntax Highlighting
 
-This extension provides syntax highlighting for DBML files in Visual Studio Code.
+This extension provides syntax highlighting for DBML files in Visual Studio Code. 
+
+It is based on the [official DBML source syntax highlighting](https://github.com/holistics/dbml/blob/master/dbml-playground/src/components/monaco/dbml-language.ts) and converted to TextMate grammar for use in Visual Studio Code using AI. 
+
+When the upstream syntax file changes a PR will be made to this extension's repo for updating.
 
 ## Prerequisites
 

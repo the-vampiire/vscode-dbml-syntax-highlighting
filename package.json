@@ -2,6 +2,13 @@
   "name": "dbml-syntax-highlighting",
   "displayName": "DBML Syntax Highlighting",
   "description": "Syntax highlighting for DBML files",
+  "keywords": [
+    "DBML",
+    "syntax highlighting"
+  ],
+  "repository": {
+    "url": "https://github.com/the-vampiire/vscode-dbml-syntax-highlighting"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.0.0"
