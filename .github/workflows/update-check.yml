@@ -23,24 +23,14 @@ jobs:
           chmod +x scripts/check-for-update.sh
           scripts/check-for-update.sh
 
-      - name: Create branch if diff detected
-        if: env.DIFF_FOUND == '1'
-        run: |
-          BRANCH_NAME="source-diff-$(date +%Y%m%d%H%M%S)"
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git checkout -b $BRANCH_NAME
-          git add upstream-source/dbml-language.ts
-          git commit -m "Update upstream source file"
-          git push origin $BRANCH_NAME
-
       - name: Create Pull Request
         if: env.DIFF_FOUND == '1'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ env.BRANCH_NAME }}
+          branch: "source-diff-$(date +%Y%m%d%H%M%S)"
+          commit-message: "drift detected from upstream source"
           title: "drift from source detected"
           body: "The upstream source has been updated, review the diff and update the extension."
           base: master
+          assignees: "the-vampiire"
