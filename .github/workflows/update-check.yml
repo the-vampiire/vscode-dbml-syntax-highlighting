@@ -1,0 +1,46 @@
+name: Check for Upstream Updates
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git diff
+
+      - name: Run update check
+        run: |
+          chmod +x scripts/check-for-update.sh
+          scripts/check-for-update.sh
+
+      - name: Create PR if diff detected
+        if: failure()  # Runs if previous step failed (diff found)
+        run: |
+          BRANCH_NAME="source-diff-$(date +%Y%m%d%H%M%S)"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b $BRANCH_NAME
+          git add upstream-source/dbml-language.ts
+          git commit -m "Update upstream source file"
+          git push origin $BRANCH_NAME
+
+      - name: Create Pull Request
+        if: failure()  # Runs if previous step failed (diff found)
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ env.BRANCH_NAME }}
+          title: "drift from source detected"
+          body: "The upstream source has been updated, review the diff and update the extension."
+          base: master

@@ -40,6 +40,16 @@ This extension provides syntax highlighting for DBML files in Visual Studio Code
 
 Open any `.dbml` file in VS Code. The extension automatically applies syntax highlighting based on the TextMate grammar.
 
+## Automated Updates
+
+This repository includes a GitHub Action (`.github/workflows/update-check.yml`) that runs daily to check for updates in the upstream DBML source file. If changes are detected:
+
+- It creates a new branch named `source-diff-{timestamp}` (e.g., `source-diff-20231012193045`)
+- Commits the updated `upstream-source/dbml-language.ts` file
+- Opens a pull request titled "drift from source detected" with a body explaining the upstream update
+
+The action can also be triggered manually via workflow dispatch. This ensures the extension stays in sync with the latest DBML language definition.
+
 ## Documentation Links
 
 - [VS Code TextMate grammar contribution](https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide)
